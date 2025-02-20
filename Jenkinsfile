@@ -8,7 +8,7 @@ pipeline {
     }
 
     stages {
-        /*stage('Build') {
+        stage('Build') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -70,7 +70,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
         stage('Deploy Staging') {
             agent {
                 docker {
@@ -88,7 +88,14 @@ pipeline {
                 '''
             }
         }
-        /*stage('Deploy Prod') {
+        stage('Approval for PROD DEPLOYMENT') {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    input message: 'Approval needed for PROD DEPLOYMENT', ok: 'APPROVE PROD DEPLOYMENT'
+                }
+            }
+        }
+        stage('Deploy Prod') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -125,6 +132,6 @@ pipeline {
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright E2E', reportTitles: '', useWrapperFileDirectly: true])
                 }
             }
-        }*/
+        }
     }
 }
