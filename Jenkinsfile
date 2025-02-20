@@ -4,10 +4,11 @@ pipeline {
     environment {
         BUILD_FILE_NAME = 'index.html'
         NETLIFY_SITE_ID = '409ed764-91d2-4c12-8682-c71ccf0f2711'
+        NETLIFY_AUTH_TOKEN = credentials('netlify-token')
     }
 
     stages {
-        stage('Build') {
+        /*stage('Build') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -69,7 +70,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage('Deploy') {
             agent {
                 docker {
@@ -82,6 +83,7 @@ pipeline {
                     npm install netlify-cli
                     node_modules/.bin/netlify --version
                     echo "Deploying to porduction... Site ID: $NETLIFY_SITE_ID"
+                    node_modules/.bin/netlify --status
                 '''
             }
         }
