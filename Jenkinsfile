@@ -8,7 +8,7 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        /*stage('Build') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -87,7 +87,7 @@ pipeline {
                     node_modules/.bin/netlify deploy --dir=build --prod
                 '''
             }
-        }
+        }*/
         stage('Prod E2E') {
             agent {
                 docker {
@@ -105,7 +105,7 @@ pipeline {
             }
             post {
                 always {
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwrightE2E-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright E2E Report', reportTitles: '', useWrapperFileDirectly: true])
                 }
             }
         }
