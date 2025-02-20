@@ -90,7 +90,7 @@ pipeline {
         }
         stage('Approval for PROD DEPLOYMENT') {
             steps {
-                timeout(time: 1, unit: 'HOURS') {
+                timeout(time: 1, unit: 'MINUTES') {
                     input message: 'Approval needed for PROD DEPLOYMENT', ok: 'APPROVE PROD DEPLOYMENT'
                 }
             }
