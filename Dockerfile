@@ -1,3 +1,3 @@
 FROM mcr.microsoft.com/playwright:v1.39.0-jammy
 
-RUN npm install -g netlify-cli node-jq;npm install -g serve
+RUN npm install -g netlify-cli node-jq serve;apt update;apt install jq -y
