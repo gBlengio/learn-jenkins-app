@@ -5,6 +5,7 @@ pipeline {
         BUILD_FILE_NAME = 'index.html'
         NETLIFY_SITE_ID = '409ed764-91d2-4c12-8682-c71ccf0f2711'
         NETLIFY_AUTH_TOKEN = credentials('netlify-token')
+        REACT_APP_VERSION = "1.0.$BUILD_ID"
     }
 
     stages {
@@ -95,13 +96,6 @@ pipeline {
             post {
                 always {
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Staging E2E', reportTitles: '', useWrapperFileDirectly: true])
-                }
-            }
-        }
-        stage('Approval for PROD DEPLOYMENT') {
-            steps {
-                timeout(time: 1, unit: 'MINUTES') {
-                    input message: 'Approval needed for PROD DEPLOYMENT', ok: 'APPROVE PROD DEPLOYMENT'
                 }
             }
         }
